@@ -100,7 +100,7 @@ public class Board extends Actor
         return turn;
     }
 
-    private void switchTurn()
+    public void switchTurn()
     {
         switch(turn)
         {

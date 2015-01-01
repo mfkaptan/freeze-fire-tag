@@ -18,13 +18,14 @@ public class FreezeFireTag extends Game
     @Override
     public void create()
     {
-        gameScreen = new GameScreen(this);
-        menuScreen = new MenuScreen(this, gameScreen.stage.getBatch());
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/second.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 24;
+        parameter.size = 2;
         font = generator.generateFont(parameter); // font size 12 pixels
         generator.dispose();
+
+        gameScreen = new GameScreen(this);
+        menuScreen = new MenuScreen(this, gameScreen.stage.getBatch());
         setScreen(menuScreen);
     }
 

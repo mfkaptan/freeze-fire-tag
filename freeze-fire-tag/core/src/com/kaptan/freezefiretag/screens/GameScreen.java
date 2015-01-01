@@ -3,8 +3,12 @@ package com.kaptan.freezefiretag.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kaptan.freezefiretag.FreezeFireTag;
 import com.kaptan.freezefiretag.entities.Board;
@@ -15,6 +19,11 @@ public class GameScreen implements Screen
     private final FreezeFireTag game;
     public Stage stage;
     private Board board;
+    private Skin skin;
+    private SpriteBatch hudBatch;
+    /* Buttons */
+    private TextButton readyButton;
+    Table table = new Table();
     Group bg = new Group();
     Group fg = new Group();
 
@@ -49,6 +58,17 @@ public class GameScreen implements Screen
         board.addFire(13, 12);
         board.addFire(17, 13);
         board.addFire(19, 2);
+
+        hudBatch = new SpriteBatch();
+
+        skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        readyButton = new TextButton("Ready", skin);
+        // readyButton.debug();
+        readyButton.setSize(1, 1);
+        table.setPosition(8, 10);
+        table.add(readyButton).width(1).height(1);
+        table.debug();
+        stage.addActor(table);
     }
 
     @Override
@@ -70,7 +90,7 @@ public class GameScreen implements Screen
     @Override
     public void resize(int width, int height)
     {
-        // stage.getViewport().update(width, height, true);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -97,6 +117,7 @@ public class GameScreen implements Screen
     @Override
     public void dispose()
     {
+        skin.dispose();
         stage.dispose();
         board.dispose();
     }
