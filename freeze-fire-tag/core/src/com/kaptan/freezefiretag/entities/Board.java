@@ -40,6 +40,7 @@ public class Board extends Actor
     private final String FIRE = "FireTurn";
     private final String ICE = "IceTurn";
     private final int oriX = 1, oriY = 1;
+    /* Temp */
     private RangeBlock tempRange;
     private Array<Tile> neighbours;
 
