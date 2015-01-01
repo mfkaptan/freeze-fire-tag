@@ -1,17 +1,17 @@
 package com.kaptan.freezefiretag.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kaptan.freezefiretag.FreezeFireTag;
 import com.kaptan.freezefiretag.entities.Board;
+import com.kaptan.freezefiretag.entities.Button;
 
 
 public class GameScreen implements Screen
@@ -20,14 +20,12 @@ public class GameScreen implements Screen
     public Stage stage;
     private Board board;
     private Skin skin;
-    private SpriteBatch hudBatch;
+    private Stage hud;
     /* Buttons */
-    private TextButton readyButton;
+    private Button readyButton;
     Table table = new Table();
     Group bg = new Group();
     Group fg = new Group();
-
-    // private InputMultiplexer inputMultiplexer = new InputMultiplexer();
 
     /*
      * The game screen. This class will be rendered during the game
@@ -38,7 +36,11 @@ public class GameScreen implements Screen
         this.game = freezeFireTag;
         /* Stage that will handle the actors */
         stage = new Stage(new FitViewport(27, 16));
-        Gdx.input.setInputProcessor(stage);
+        hud = new Stage();
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(0, hud);
+        inputMultiplexer.addProcessor(1, stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
         /* Add backgroung group to stage */
         stage.addActor(bg);
         /* Add foreground group to stage */
@@ -59,16 +61,11 @@ public class GameScreen implements Screen
         board.addFire(17, 13);
         board.addFire(19, 2);
 
-        hudBatch = new SpriteBatch();
-
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-        readyButton = new TextButton("Ready", skin);
-        // readyButton.debug();
-        readyButton.setSize(1, 1);
-        table.setPosition(8, 10);
-        table.add(readyButton).width(1).height(1);
-        table.debug();
-        stage.addActor(table);
+        readyButton = new Button("Ready", skin, board);
+        table.setPosition(720, 60);
+        table.add(readyButton).width(100).height(60);
+        hud.addActor(table);
     }
 
     @Override
@@ -85,12 +82,15 @@ public class GameScreen implements Screen
 
         stage.act(delta);
         stage.draw();
+
+        hud.draw();
     }
 
     @Override
     public void resize(int width, int height)
     {
         stage.getViewport().update(width, height, true);
+        hud.getViewport().update(width, height, true);
     }
 
     @Override
@@ -119,6 +119,7 @@ public class GameScreen implements Screen
     {
         skin.dispose();
         stage.dispose();
+        hud.dispose();
         board.dispose();
     }
 }
