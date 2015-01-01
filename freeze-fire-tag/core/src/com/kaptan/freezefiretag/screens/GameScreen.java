@@ -99,6 +99,5 @@ public class GameScreen implements Screen
     {
         stage.dispose();
         board.dispose();
-        board.dispose();
     }
 }

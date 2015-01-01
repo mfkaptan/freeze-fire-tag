@@ -37,8 +37,6 @@ public class Board extends Actor
     /* Width x Height */
     private int boardCols, boardRows;
     private Turn turn;
-    private final String FIRE = "FireTurn";
-    private final String ICE = "IceTurn";
     private final int oriX = 1, oriY = 1;
     /* Temp */
     private RangeBlock tempRange;
@@ -85,12 +83,12 @@ public class Board extends Actor
             switch(turn)
             {
                 case fire:
-                    mapLayers.get(FIRE).setVisible(true);
-                    mapLayers.get(ICE).setVisible(false);
+                    mapLayers.get(Constants.FIRE).setVisible(true);
+                    mapLayers.get(Constants.ICE).setVisible(false);
                     break;
                 case ice:
-                    mapLayers.get(ICE).setVisible(true);
-                    mapLayers.get(FIRE).setVisible(false);
+                    mapLayers.get(Constants.ICE).setVisible(true);
+                    mapLayers.get(Constants.FIRE).setVisible(false);
                     break;
             }
             turn.hasChanged = false;
