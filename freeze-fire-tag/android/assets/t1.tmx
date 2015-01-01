@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="27" height="16" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tset2" tilewidth="32" tileheight="32">
+  <image source="tset2.png" width="480" height="384"/>
+ </tileset>
+ <layer name="Board" width="27" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAvWAjES6hI4wPUtGfhqL9G/TXqr1F/jfqLKH/RCwAAWbCxvQ==
+  </data>
+ </layer>
+ <layer name="IceTurn" width="27" height="16">
+  <data encoding="base64" compression="zlib">
+   eJybzsDAsJzKeCYQ92DB0xmoD0B2zcaCR+0atWvUrlG7Ru0aGLs6qYxBdq3CggFz8Vsx
+  </data>
+ </layer>
+ <layer name="FireTurn" width="27" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxzYGBgCKAydgJifSzYgYH6AGSXHRY8ateoXaN2jdo1atfA2GVEZQyyyxcLBgBdkiWp
+  </data>
+ </layer>
+</map>
