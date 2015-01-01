@@ -31,7 +31,7 @@ public class RangeBlock extends Block
     @Override
     public void select()
     {
-        callClearOnAllRange();
+        cleanUpAll();
 
         selected = true;
         block.setColor(chosenColor);
@@ -40,18 +40,18 @@ public class RangeBlock extends Block
     @Override
     public void unselect()
     {
-        callClearOnAllRange();
+        cleanUpAll();
 
         selected = false;
         block.setColor(originColor);
     }
 
     /* Call update() on all rangeGroup members of origin block*/
-    public void callClearOnAllRange()
+    public void cleanUpAll()
     {
         for(Actor r : origin.rangeGroup.getChildren())
         {
-            ((RangeBlock) r).clear();
+            ((RangeBlock) r).cleanUp();
         }
         board.setTileStatus(getX(), getY(), Status.selected);
     }
@@ -61,7 +61,7 @@ public class RangeBlock extends Block
         return origin;
     }
 
-    public void clear()
+    public void cleanUp()
     {
         selected = false;
         block.setColor(originColor);
@@ -70,7 +70,7 @@ public class RangeBlock extends Block
     @Override
     public void reset()
     {
-        clear();
+        cleanUp();
         origin = null;
     }
 }

@@ -188,7 +188,7 @@ public class Board extends Actor
     {
         for(Tile t : getNeighbours(blk.getX(), blk.getY()))
         {
-            if(t.getStatus() == Status.empty || t.getStatus() == Status.free)
+            if(t.getStatus() == Status.empty)
             {
                 tempRange = blockPools.rangePool.obtain();
                 tempRange.init(blk, t.posX, t.posY);
@@ -255,7 +255,7 @@ public class Board extends Actor
         {
             for(int col = 0; col < boardCols; col++)
             {
-                System.out.print(tiles[row][col].status.toString() + " ");
+                System.out.print(tiles[row][col].getStatus().toString() + " ");
             }
             System.out.println();
         }

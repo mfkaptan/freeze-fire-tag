@@ -5,29 +5,15 @@ import com.kaptan.freezefiretag.util.Status;
 
 public class Tile
 {
-    Status status;
-    private int boardX;
-    private int boardY;
+    private Status status;
     public int posX;
     public int posY;
 
-    public Tile(int boardX, int boardY)
+    public Tile(int x, int y)
     {
         status = Status.empty;
-        this.boardX = boardX;
-        this.boardY = boardY;
-        posX = boardX + 1;
-        posY = boardY + 1;
-    }
-
-    public int getBoardY()
-    {
-        return boardY;
-    }
-
-    public int getBoardX()
-    {
-        return boardX;
+        posX = x + 1;
+        posY = y + 1;
     }
 
     public void setStatus(Status s)

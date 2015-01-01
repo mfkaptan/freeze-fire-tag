@@ -70,13 +70,4 @@ public abstract class Block extends Actor implements BlockInterface, Poolable
     {
         block.draw(batch);
     }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if(((Block) obj).getX() == getX() && ((Block) obj).getY() == getY())
-            return true;
-        else
-            return false;
-    }
 }
