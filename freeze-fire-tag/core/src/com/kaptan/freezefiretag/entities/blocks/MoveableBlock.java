@@ -9,17 +9,22 @@ import com.kaptan.freezefiretag.util.Status;
 
 public abstract class MoveableBlock extends Block
 {
+    /* The class' status */
+    protected final Status status;
     /* Current tile's previous status */
-    public Status previousStatus = Status.empty;
+    protected Status previousStatus = Status.EMPTY;
     /* Current direction */
-    private Direction direction = Direction.NONE;
+    protected Direction direction = Direction.NONE;
     /* Block's range tiles */
     public Group rangeGroup;
+    /* Selected range */
+    public RangeBlock selectedRange;
 
-    public MoveableBlock(Texture texture, Board board)
+    protected MoveableBlock(Texture texture, Board board, Status status)
     {
         super(texture, board);
         rangeGroup = new Group();
+        this.status = status;
     }
 
     @Override
@@ -29,7 +34,11 @@ public abstract class MoveableBlock extends Block
         board.setTileStatus(getX(), getY(), previousStatus);
         super.setPosition(x, y);
         /* Then save the current tiles status */
-        previousStatus = board.getTileStatus(getX(), getY());
+        previousStatus = board.getTileStatus(x, y);
+        /* Finally set current tile's status as appropriate status */
+        board.setTileStatus(x, y, status);
+
+        // board.debugLog();
     }
 
     protected void showRange()
@@ -40,6 +49,7 @@ public abstract class MoveableBlock extends Block
 
     protected void clearRange()
     {
+        selectedRange = null;
         board.clearRange(this);
         selected = false;
     }
@@ -54,12 +64,12 @@ public abstract class MoveableBlock extends Block
         direction = Direction.calculateDirection(getX(), getY(), x, y);
     }
 
-    /* Move to specified coordinates and set the direction */
+    /* Move to selected tile */
     /* Clear the range after moving */
-    public void moveTo(float x, float y)
+    public void moveToSelected()
     {
-        setDirection(x, y);
-        setPosition(x, y);
+        setDirection(selectedRange.getX(), selectedRange.getY());
+        setPosition(selectedRange.getX(), selectedRange.getY());
         clearRange();
     }
 
@@ -67,6 +77,6 @@ public abstract class MoveableBlock extends Block
     public void reset()
     {
         direction = Direction.NONE;
-        previousStatus = Status.empty;
+        previousStatus = Status.EMPTY;
     }
 }

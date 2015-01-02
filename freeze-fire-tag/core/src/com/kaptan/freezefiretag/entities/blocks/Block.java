@@ -22,7 +22,7 @@ public abstract class Block extends Actor implements BlockInterface, Poolable
     /* Whether if selected by user */
     protected boolean selected = false;
 
-    public Block(Texture texture, final Board board)
+    protected Block(Texture texture, final Board board)
     {
         this.board = board;
         block = new Sprite(texture);
@@ -56,6 +56,12 @@ public abstract class Block extends Actor implements BlockInterface, Poolable
     {
         addListener(inputListener);
     }
+
+    /* Every block should have a select method */
+    public abstract void select();
+
+    /* Every block should have an unselect method */
+    public abstract void unselect();
 
     /* Set current position of geometry */
     @Override

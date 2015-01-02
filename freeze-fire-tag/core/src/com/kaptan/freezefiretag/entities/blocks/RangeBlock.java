@@ -28,32 +28,37 @@ public class RangeBlock extends Block
         setVisible(true);
     }
 
+    /* Override abstract unselect*/
     @Override
     public void select()
     {
         cleanUpAll();
 
+        board.setTileStatus(getX(), getY(), Status.SELECTED);
         selected = true;
         block.setColor(chosenColor);
+        origin.selectedRange = this;
     }
 
+    /* Override abstract unselect*/
     @Override
     public void unselect()
     {
         cleanUpAll();
 
+        board.setTileStatus(getX(), getY(), Status.EMPTY);
         selected = false;
         block.setColor(originColor);
+        origin.selectedRange = null;
     }
 
-    /* Call update() on all rangeGroup members of origin block*/
+    /* Call cleanUp() on all rangeGroup members of origin block*/
     public void cleanUpAll()
     {
         for(Actor r : origin.rangeGroup.getChildren())
         {
             ((RangeBlock) r).cleanUp();
         }
-        board.setTileStatus(getX(), getY(), Status.selected);
     }
 
     public MoveableBlock getOriginBlock()
@@ -64,6 +69,7 @@ public class RangeBlock extends Block
     public void cleanUp()
     {
         selected = false;
+        board.setTileStatus(getX(), getY(), Status.EMPTY);
         block.setColor(originColor);
     }
 

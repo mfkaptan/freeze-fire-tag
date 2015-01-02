@@ -72,7 +72,7 @@ public class Board extends Actor
         createBoard();
         blockPools = new BlockPools(this);
         neighbours = new Array<Tile>();
-        turn = Turn.fire;
+        turn = Turn.FIRE;
     }
 
     @Override
@@ -82,17 +82,23 @@ public class Board extends Actor
         {
             switch(turn)
             {
-                case fire:
+                case FIRE:
                     mapLayers.get(Constants.FIRE).setVisible(true);
                     mapLayers.get(Constants.ICE).setVisible(false);
                     break;
-                case ice:
+                case ICE:
                     mapLayers.get(Constants.ICE).setVisible(true);
                     mapLayers.get(Constants.FIRE).setVisible(false);
                     break;
             }
             turn.hasChanged = false;
         }
+    }
+
+    public void makeMove()
+    {
+        moveAndClear();
+        switchTurn();
     }
 
     public Turn getTurn()
@@ -104,11 +110,11 @@ public class Board extends Actor
     {
         switch(turn)
         {
-            case fire:
-                turn = Turn.ice;
+            case FIRE:
+                turn = Turn.ICE;
                 break;
-            case ice:
-                turn = Turn.fire;
+            case ICE:
+                turn = Turn.FIRE;
                 break;
         }
         turn.hasChanged = true;
@@ -162,6 +168,8 @@ public class Board extends Actor
         getTile(col, row).setStatus(status);
     }
 
+    /*** Range Functions ***/
+
     private Array<Tile> getNeighbours(float col, float row)
     {
         neighbours.clear();
@@ -186,16 +194,16 @@ public class Board extends Actor
     {
         for(Tile t : getNeighbours(blk.getX(), blk.getY()))
         {
-            if(t.getStatus() == Status.empty)
+            if(t.getStatus() == Status.EMPTY)
             {
                 tempRange = blockPools.rangePool.obtain();
                 tempRange.init(blk, t.posX, t.posY);
-                setTileStatus(tempRange.getX(), tempRange.getY(), Status.range);
+                setTileStatus(tempRange.getX(), tempRange.getY(), Status.RANGE);
                 blk.rangeGroup.addActor(tempRange);
             }
         }
 
-        if(getTile(blk.getX(), blk.getY()).getStatus() == Status.ice)
+        if(getTile(blk.getX(), blk.getY()).getStatus() == Status.ICE)
         {
             float[] mv = Direction.move2tiles(blk.getX(),
                                               blk.getY(),
@@ -206,7 +214,7 @@ public class Board extends Actor
             {
                 tempRange = blockPools.rangePool.obtain();
                 tempRange.init(blk, mv[0], mv[1]);
-                setTileStatus(tempRange.getX(), tempRange.getY(), Status.range);
+                setTileStatus(tempRange.getX(), tempRange.getY(), Status.RANGE);
                 blk.rangeGroup.addActor(tempRange);
             }
         }
@@ -218,10 +226,21 @@ public class Board extends Actor
         for(Actor r : blk.rangeGroup.getChildren())
         {
             blockPools.rangePool.free((RangeBlock) r);
-            setTileStatus(r.getX(), r.getY(), Status.empty);
         }
         blk.rangeGroup.clearChildren();
         rangeGroup.removeActor(blk.rangeGroup);
+    }
+
+    private void moveAndClear()
+    {
+        for(Actor r : blockGroup.getChildren())
+        {
+            clearRange((MoveableBlock) r);
+            if(((MoveableBlock) r).selectedRange != null)
+            {
+                ((MoveableBlock) r).moveToSelected();
+            }
+        }
     }
 
     @Override
@@ -247,13 +266,16 @@ public class Board extends Actor
     }
 
     /* Debugging purposes */
-    public void boardToString()
+    public void debugLog()
     {
         for(int row = 0; row < boardRows; row++)
         {
             for(int col = 0; col < boardCols; col++)
             {
-                System.out.print(tiles[row][col].getStatus().toString() + " ");
+                System.out.print(tiles[row][col].getStatus()
+                                                .toString()
+                                                .charAt(0)
+                                 + " ");
             }
             System.out.println();
         }

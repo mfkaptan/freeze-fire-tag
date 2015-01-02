@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,6 +22,7 @@ public class GameScreen implements Screen
     private Board board;
     private Skin skin;
     private Stage hud;
+    private OrthographicCamera hudCamera;
     /* Buttons */
     private Button readyButton;
     Table table = new Table();
@@ -37,6 +39,9 @@ public class GameScreen implements Screen
         /* Stage that will handle the actors */
         stage = new Stage(new FitViewport(27, 16));
         hud = new Stage();
+        // hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(),
+        // Gdx.graphics.getHeight());
+
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(0, hud);
         inputMultiplexer.addProcessor(1, stage);
@@ -61,10 +66,17 @@ public class GameScreen implements Screen
         board.addFire(17, 13);
         board.addFire(19, 2);
 
+        hud.getCamera().viewportWidth = Gdx.graphics.getWidth();
+        hud.getCamera().viewportHeight = Gdx.graphics.getHeight();
+
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+
         readyButton = new Button("Ready", skin, board);
-        table.setPosition(720, 60);
-        table.add(readyButton).width(100).height(60);
+        table.setPosition(Gdx.graphics.getWidth() * 0.9f,
+                          Gdx.graphics.getHeight() * 0.1f);
+        table.add(readyButton)
+             .width(Gdx.graphics.getWidth() * 0.1f)
+             .height(Gdx.graphics.getHeight() * 0.1f);
         hud.addActor(table);
     }
 

@@ -11,7 +11,7 @@ public class Tile
 
     public Tile(int x, int y)
     {
-        status = Status.empty;
+        status = Status.EMPTY;
         posX = x + 1;
         posY = y + 1;
     }

@@ -2,7 +2,7 @@ package com.kaptan.freezefiretag.util;
 
 public enum Turn
 {
-    fire, ice;
+    FIRE, ICE;
 
     public boolean hasChanged = false;
 }

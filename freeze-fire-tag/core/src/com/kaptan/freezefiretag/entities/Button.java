@@ -19,7 +19,7 @@ public class Button extends TextButton
             public boolean touchDown(InputEvent event, float x, float y,
                                      int pointer, int button)
             {
-                board.switchTurn();
+                board.makeMove();
                 return true;
             }
         });

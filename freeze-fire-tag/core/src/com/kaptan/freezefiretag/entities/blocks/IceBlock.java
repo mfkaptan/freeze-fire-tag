@@ -12,21 +12,13 @@ public class IceBlock extends MoveableBlock
 {
     public IceBlock(Texture texture, Board board)
     {
-        super(texture, board);
-    }
-
-    @Override
-    public void setPosition(float x, float y)
-    {
-        super.setPosition(x, y);
-        /* Finally set current tiles status as ice */
-        board.setTileStatus(x, y, Status.ice);
+        super(texture, board, Status.ICE);
     }
 
     @Override
     public void act(float delta)
     {
-        if(board.getTurn() == Turn.ice)
+        if(board.getTurn() == Turn.ICE)
         {
             setTouchable(Touchable.enabled);
         }
@@ -36,12 +28,14 @@ public class IceBlock extends MoveableBlock
         }
     }
 
+    /* Override abstract select*/
     @Override
     public void select()
     {
         showRange();
     }
 
+    /* Override abstract unselect*/
     @Override
     public void unselect()
     {
