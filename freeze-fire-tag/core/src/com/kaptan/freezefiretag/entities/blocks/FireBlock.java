@@ -3,6 +3,7 @@ package com.kaptan.freezefiretag.entities.blocks;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.kaptan.freezefiretag.entities.Board;
+import com.kaptan.freezefiretag.entities.blocks.pools.BlockPools;
 import com.kaptan.freezefiretag.util.Status;
 import com.kaptan.freezefiretag.util.Turn;
 
@@ -18,7 +19,7 @@ public class FireBlock extends MoveableBlock
     @Override
     public void act(float delta)
     {
-        if(board.getTurn() == Turn.FIRE)
+        if(status == Status.FIRE && board.getTurn() == Turn.FIRE)
         {
             setTouchable(Touchable.enabled);
         }
@@ -26,6 +27,20 @@ public class FireBlock extends MoveableBlock
         {
             setTouchable(Touchable.disabled);
         }
+    }
+
+    public void freeze()
+    {
+        status = Status.FROZEN;
+        block.setTexture(BlockPools.frozenTexture);
+
+    }
+
+    public void unfreeze()
+    {
+        status = Status.FIRE;
+        block.setTexture(BlockPools.fireTexture);
+
     }
 
     /* Override abstract select*/

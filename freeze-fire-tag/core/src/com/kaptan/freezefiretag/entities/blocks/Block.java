@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.kaptan.freezefiretag.entities.Board;
+import com.kaptan.freezefiretag.util.Status;
 
 
 /* Every *Block class must extend from this class */
@@ -21,6 +22,8 @@ public abstract class Block extends Actor implements BlockInterface, Poolable
     protected InputListener inputListener;
     /* Whether if selected by user */
     protected boolean selected = false;
+    /* Status */
+    protected Status status;
 
     protected Block(Texture texture, final Board board)
     {

@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
+import com.kaptan.freezefiretag.entities.blocks.Block;
 import com.kaptan.freezefiretag.entities.blocks.FireBlock;
 import com.kaptan.freezefiretag.entities.blocks.IceBlock;
 import com.kaptan.freezefiretag.entities.blocks.MoveableBlock;
@@ -41,6 +42,7 @@ public class Board extends Actor
     /* Temp */
     private RangeBlock tempRange;
     private Array<Tile> neighbours;
+    private IceBlock iceBlock;
 
     /**
      * Holds board information
@@ -92,6 +94,17 @@ public class Board extends Actor
                     break;
             }
             turn.hasChanged = false;
+
+            /* Freeze blocks */
+            for(Tile t : getNeighbours(iceBlock.getX(), iceBlock.getY()))
+            {
+                if(t.getStatus() == Status.FIRE)
+                {
+                    ((FireBlock) getBlock(t.posX, t.posY)).freeze();
+                    t.setStatus(Status.FROZEN);
+                }
+            }
+            // debugLog();
         }
     }
 
@@ -166,6 +179,16 @@ public class Board extends Actor
     public void setTileStatus(float col, float row, Status status)
     {
         getTile(col, row).setStatus(status);
+    }
+
+    private Block getBlock(float col, float row)
+    {
+        for(Actor a : blockGroup.getChildren())
+        {
+            if(a.getX() == col && a.getY() == row)
+                return (Block) a;
+        }
+        return null;
     }
 
     /*** Range Functions ***/
@@ -256,6 +279,7 @@ public class Board extends Actor
         IceBlock ice = blockPools.icePool.obtain();
         ice.setPosition(x, y);
         blockGroup.addActor(ice);
+        this.iceBlock = ice;
     }
 
     public void addFire(float x, float y)

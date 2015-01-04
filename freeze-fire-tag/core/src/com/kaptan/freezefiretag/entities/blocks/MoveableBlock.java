@@ -9,8 +9,6 @@ import com.kaptan.freezefiretag.util.Status;
 
 public abstract class MoveableBlock extends Block
 {
-    /* The class' status */
-    protected final Status status;
     /* Current tile's previous status */
     protected Status previousStatus = Status.EMPTY;
     /* Current direction */
@@ -37,8 +35,6 @@ public abstract class MoveableBlock extends Block
         previousStatus = board.getTileStatus(x, y);
         /* Finally set current tile's status as appropriate status */
         board.setTileStatus(x, y, status);
-
-        // board.debugLog();
     }
 
     protected void showRange()

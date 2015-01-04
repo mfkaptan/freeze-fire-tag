@@ -19,6 +19,7 @@ public class RangeBlock extends Block
         super(texture, board);
         block.setAlpha(150);
         originColor = block.getColor();
+        status = Status.RANGE;
     }
 
     public void init(MoveableBlock b, float x, float y)
