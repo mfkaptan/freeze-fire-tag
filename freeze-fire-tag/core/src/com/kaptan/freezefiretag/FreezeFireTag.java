@@ -36,8 +36,15 @@ public class FreezeFireTag extends Game
     }
 
     @Override
+    public void resize(int width, int height)
+    {
+        super.resize(width, height);
+    }
+
+    @Override
     public void dispose()
     {
+        super.dispose();
         font.dispose();
         gameScreen.dispose();
         menuScreen.dispose();

@@ -55,10 +55,10 @@ public class GameScreen implements Screen
         board = new Board(20, 14, fg, stage.getCamera());
         /* Add board to background */
         bg.addActor(board);
-        board.addFire(1, 2);
-        board.addFire(2, 8);
+        board.addFire(4, 5);
+        board.addFire(5, 5);
         board.addIce(3, 5);
-        board.addFire(3, 11);
+        board.addFire(4, 4);
         board.addFire(9, 6);
         board.addFire(10, 10);
         board.addFire(11, 4);

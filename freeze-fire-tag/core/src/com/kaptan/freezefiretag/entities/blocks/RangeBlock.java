@@ -13,6 +13,7 @@ public class RangeBlock extends Block
     MoveableBlock origin;
     public static final Color chosenColor = new Color(0.1f, 0.8f, 0.1f, 0.8f);
     public static Color originColor;
+    private Status previousStatus;
 
     public RangeBlock(Texture texture, final Board board)
     {
@@ -27,6 +28,11 @@ public class RangeBlock extends Block
         setPosition(x, y);
         origin = b;
         setVisible(true);
+        previousStatus = board.getTileStatus(getX(), getY());
+        if(previousStatus == Status.RANGE || previousStatus == Status.SELECTED)
+        {
+            previousStatus = Status.EMPTY;
+        }
     }
 
     /* Override abstract unselect*/
@@ -47,7 +53,7 @@ public class RangeBlock extends Block
     {
         cleanUpAll();
 
-        board.setTileStatus(getX(), getY(), Status.EMPTY);
+        board.setTileStatus(getX(), getY(), previousStatus);
         selected = false;
         block.setColor(originColor);
         origin.selectedRange = null;
@@ -70,7 +76,7 @@ public class RangeBlock extends Block
     public void cleanUp()
     {
         selected = false;
-        board.setTileStatus(getX(), getY(), Status.EMPTY);
+        board.setTileStatus(getX(), getY(), previousStatus);
         block.setColor(originColor);
     }
 

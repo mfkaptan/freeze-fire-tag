@@ -1,5 +1,7 @@
 package com.kaptan.freezefiretag.entities;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -41,7 +43,9 @@ public class Board extends Actor
     private final int oriX = 1, oriY = 1;
     /* Temp */
     private RangeBlock tempRange;
-    private Array<Tile> neighbours;
+    private FireBlock tempFire;
+    private Array<Tile> neighbours = new Array<Tile>();
+    private Array<FireBlock> frozenBlocks = new Array<FireBlock>();
     private IceBlock iceBlock;
 
     /**
@@ -95,15 +99,41 @@ public class Board extends Actor
             }
             turn.hasChanged = false;
 
+            for(Iterator<FireBlock> iter = frozenBlocks.iterator(); iter.hasNext();)
+            {
+                tempFire = iter.next();
+                /* Search all neighbors */
+                for(Tile t : getNeighbours(tempFire.getX(), tempFire.getY()))
+                {
+                    if(t.getStatus() == Status.FIRE)
+                    {
+                        /* If there is a fire neighbor, unfreeze*/
+                        tempFire.unfreeze();
+                        setTileStatus(tempFire.getX(),
+                                      tempFire.getY(),
+                                      Status.FIRE);
+                        /* Remove it from the list*/
+                        iter.remove();
+                        break;
+                    }
+                }
+            }
+
             /* Freeze blocks */
+            /* Search all neighbors */
             for(Tile t : getNeighbours(iceBlock.getX(), iceBlock.getY()))
             {
                 if(t.getStatus() == Status.FIRE)
                 {
-                    ((FireBlock) getBlock(t.posX, t.posY)).freeze();
+                    /* If there is a fire neighbor, freeze it*/
+                    tempFire = (FireBlock) getBlock(t.posX, t.posY);
+                    tempFire.freeze();
                     t.setStatus(Status.FROZEN);
+                    /* Add it to frozenblocks */
+                    frozenBlocks.add(tempFire);
                 }
             }
+
             // debugLog();
         }
     }
@@ -296,10 +326,29 @@ public class Board extends Actor
         {
             for(int col = 0; col < boardCols; col++)
             {
-                System.out.print(tiles[row][col].getStatus()
-                                                .toString()
-                                                .charAt(0)
-                                 + " ");
+                switch(tiles[row][col].getStatus())
+                {
+                    case EMPTY:
+                        System.out.print("- ");
+                        break;
+                    case ICE:
+                        System.out.print("I ");
+                        break;
+                    case FIRE:
+                        System.out.print("F ");
+                        break;
+                    case FROZEN:
+                        System.out.print("0 ");
+                        break;
+                    case RANGE:
+                        System.out.print("_ ");
+                        break;
+                    case SELECTED:
+                        System.out.print("= ");
+                        break;
+                    default:
+                        break;
+                }
             }
             System.out.println();
         }
