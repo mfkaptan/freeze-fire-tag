@@ -76,6 +76,11 @@ public class RangeBlock extends Block
     public void cleanUp()
     {
         selected = false;
+        previousStatus = board.getTileStatus(getX(), getY());
+        if(previousStatus == Status.RANGE || previousStatus == Status.SELECTED)
+        {
+            previousStatus = Status.EMPTY;
+        }
         board.setTileStatus(getX(), getY(), previousStatus);
         block.setColor(originColor);
     }

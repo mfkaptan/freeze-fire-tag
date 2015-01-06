@@ -64,9 +64,10 @@ public abstract class MoveableBlock extends Block
     /* Clear the range after moving */
     public void moveToSelected()
     {
-        setDirection(selectedRange.getX(), selectedRange.getY());
-        setPosition(selectedRange.getX(), selectedRange.getY());
+        float x = selectedRange.getX(), y = selectedRange.getY();
         clearRange();
+        setDirection(x, y);
+        setPosition(x, y);
     }
 
     @Override
