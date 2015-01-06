@@ -35,16 +35,16 @@ public class RangeBlock extends Block
         }
     }
 
-    /* Override abstract unselect*/
+    /* Override abstract select*/
     @Override
     public void select()
     {
-        cleanUpAll();
-
-        board.setTileStatus(getX(), getY(), Status.SELECTED);
         selected = true;
+        board.setTileStatus(getX(), getY(), Status.SELECTED);
         block.setColor(chosenColor);
-        origin.selectedRange = this;
+
+        board.clearExceptSelected(origin);
+        // cleanUpAll();
     }
 
     /* Override abstract unselect*/

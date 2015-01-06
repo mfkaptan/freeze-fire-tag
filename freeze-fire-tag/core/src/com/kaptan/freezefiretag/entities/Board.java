@@ -99,7 +99,8 @@ public class Board extends Actor
             }
             turn.hasChanged = false;
 
-            for(Iterator<FireBlock> iter = frozenBlocks.iterator(); iter.hasNext();)
+            Iterator<FireBlock> iter = frozenBlocks.iterator();
+            while(iter.hasNext())
             {
                 tempFire = iter.next();
                 /* Search all neighbors */
@@ -274,6 +275,12 @@ public class Board extends Actor
         rangeGroup.addActor(blk.rangeGroup);
     }
 
+    /**
+     * Clears a MoveableBlock's range
+     * 
+     * @param blk
+     *            MoveableBlock's range will be removed
+     */
     public void clearRange(MoveableBlock blk)
     {
         for(Actor r : blk.rangeGroup.getChildren())
@@ -282,6 +289,31 @@ public class Board extends Actor
         }
         blk.rangeGroup.clearChildren();
         rangeGroup.removeActor(blk.rangeGroup);
+    }
+
+    /**
+     * Clears a MoveableBlock's range except the selected one.
+     * Sets the MoveableBlock's selectedRange
+     * 
+     * @param blk
+     *            MoveableBlock that is going to move
+     */
+    public void clearExceptSelected(MoveableBlock blk)
+    {
+        Iterator<Actor> iter = blk.rangeGroup.getChildren().iterator();
+        while(iter.hasNext())
+        {
+            tempRange = (RangeBlock) iter.next();
+            if(tempRange.isSelected())
+            {
+                blk.selectedRange = tempRange;
+            }
+            else
+            {
+                blockPools.rangePool.free(tempRange);
+                iter.remove();
+            }
+        }
     }
 
     private void moveAndClear()

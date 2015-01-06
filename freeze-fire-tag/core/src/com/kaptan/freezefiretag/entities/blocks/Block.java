@@ -60,6 +60,11 @@ public abstract class Block extends Actor implements BlockInterface, Poolable
         addListener(inputListener);
     }
 
+    public boolean isSelected()
+    {
+        return selected;
+    }
+
     /* Every block should have a select method */
     public abstract void select();
 
