@@ -46,7 +46,7 @@ public class Board extends Actor
     private FireBlock tempFire;
     private Array<Tile> neighbours = new Array<Tile>();
     private Array<FireBlock> frozenBlocks = new Array<FireBlock>();
-    private IceBlock iceBlock;
+    private Array<IceBlock> iceBlocks = new Array<IceBlock>();
 
     /**
      * Holds board information
@@ -122,19 +122,21 @@ public class Board extends Actor
 
             /* Freeze blocks */
             /* Search all neighbors */
-            for(Tile t : getNeighbours(iceBlock.getX(), iceBlock.getY()))
+            for(IceBlock iceBlock : iceBlocks)
             {
-                if(t.getStatus() == Status.FIRE)
+                for(Tile t : getNeighbours(iceBlock.getX(), iceBlock.getY()))
                 {
-                    /* If there is a fire neighbor, freeze it*/
-                    tempFire = (FireBlock) getBlock(t.posX, t.posY);
-                    tempFire.freeze();
-                    t.setStatus(Status.FROZEN);
-                    /* Add it to frozenblocks */
-                    frozenBlocks.add(tempFire);
+                    if(t.getStatus() == Status.FIRE)
+                    {
+                        /* If there is a fire neighbor, freeze it*/
+                        tempFire = (FireBlock) getBlock(t.posX, t.posY);
+                        tempFire.freeze();
+                        t.setStatus(Status.FROZEN);
+                        /* Add it to frozenblocks */
+                        frozenBlocks.add(tempFire);
+                    }
                 }
             }
-
             // debugLog();
         }
     }
@@ -341,7 +343,7 @@ public class Board extends Actor
         IceBlock ice = blockPools.icePool.obtain();
         ice.setPosition(x, y);
         blockGroup.addActor(ice);
-        this.iceBlock = ice;
+        iceBlocks.add(ice);
     }
 
     public void addFire(float x, float y)

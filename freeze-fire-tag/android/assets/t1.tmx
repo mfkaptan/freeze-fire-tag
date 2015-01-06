@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Board" width="27" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYKAvWAjES6hI4wPUtGfhqL9G/TXqr1F/jfqLKH/RCwAAWbCxvQ==
+   eJxjYKAvWAjES6hI4wPUtGfhqL9GnL/mAbELnfzlArVvNL5G/TUc/EUvAACz+7D3
   </data>
  </layer>
  <layer name="IceTurn" width="27" height="16">

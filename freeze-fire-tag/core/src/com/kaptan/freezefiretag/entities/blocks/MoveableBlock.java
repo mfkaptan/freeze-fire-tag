@@ -2,6 +2,7 @@ package com.kaptan.freezefiretag.entities.blocks;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.kaptan.freezefiretag.entities.Board;
 import com.kaptan.freezefiretag.util.Direction;
 import com.kaptan.freezefiretag.util.Status;
@@ -23,6 +24,7 @@ public abstract class MoveableBlock extends Block
         super(texture, board);
         rangeGroup = new Group();
         this.status = status;
+        setTouchable(Touchable.disabled);
     }
 
     @Override
