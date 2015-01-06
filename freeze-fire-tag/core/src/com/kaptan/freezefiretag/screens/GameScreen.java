@@ -55,16 +55,19 @@ public class GameScreen implements Screen
         board = new Board(20, 14, fg, stage.getCamera());
         /* Add board to background */
         bg.addActor(board);
-        board.addFire(4, 5);
-        board.addFire(5, 5);
-        board.addIce(3, 5);
+        board.addIce(10, 7);
+        board.addIce(11, 8);
+
+        board.addFire(7, 3);
+        board.addFire(14, 3);
         board.addFire(4, 4);
-        board.addFire(9, 6);
-        board.addFire(10, 10);
-        board.addFire(11, 4);
-        board.addFire(13, 12);
-        board.addFire(17, 13);
-        board.addFire(19, 2);
+        board.addFire(17, 4);
+        board.addFire(18, 7);
+        board.addFire(3, 8);
+        board.addFire(4, 11);
+        board.addFire(17, 11);
+        board.addFire(7, 12);
+        board.addFire(14, 12);
 
         hud.getCamera().viewportWidth = Gdx.graphics.getWidth();
         hud.getCamera().viewportHeight = Gdx.graphics.getHeight();
