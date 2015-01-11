@@ -29,13 +29,9 @@ public class RangeBlock extends Block
         origin = b;
         setVisible(true);
         previousStatus = board.getTileStatus(getX(), getY());
-        if(previousStatus == Status.RANGE || previousStatus == Status.SELECTED)
-        {
-            previousStatus = Status.EMPTY;
-        }
     }
 
-    /* Override abstract select*/
+    /* Override abstract select */
     @Override
     public void select()
     {
@@ -47,7 +43,7 @@ public class RangeBlock extends Block
         // cleanUpAll();
     }
 
-    /* Override abstract unselect*/
+    /* Override abstract unselect */
     @Override
     public void unselect()
     {
@@ -59,7 +55,7 @@ public class RangeBlock extends Block
         origin.selectedRange = null;
     }
 
-    /* Call cleanUp() on all rangeGroup members of origin block*/
+    /* Call cleanUp() on all rangeGroup members of origin block */
     public void cleanUpAll()
     {
         for(Actor r : origin.rangeGroup.getChildren())
@@ -76,11 +72,6 @@ public class RangeBlock extends Block
     public void cleanUp()
     {
         selected = false;
-        previousStatus = board.getTileStatus(getX(), getY());
-        if(previousStatus == Status.RANGE || previousStatus == Status.SELECTED)
-        {
-            previousStatus = Status.EMPTY;
-        }
         board.setTileStatus(getX(), getY(), previousStatus);
         block.setColor(originColor);
     }

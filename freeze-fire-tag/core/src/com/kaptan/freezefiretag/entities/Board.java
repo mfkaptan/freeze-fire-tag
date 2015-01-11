@@ -86,7 +86,7 @@ public class Board extends Actor
     {
         if(turn.hasChanged)
         {
-            switch(turn)
+            switch (turn)
             {
                 case FIRE:
                     mapLayers.get(Constants.FIRE).setVisible(true);
@@ -100,7 +100,7 @@ public class Board extends Actor
             turn.hasChanged = false;
 
             Iterator<FireBlock> iter = frozenBlocks.iterator();
-            while(iter.hasNext())
+            while (iter.hasNext())
             {
                 tempFire = iter.next();
                 /* Search all neighbors */
@@ -108,12 +108,11 @@ public class Board extends Actor
                 {
                     if(t.getStatus() == Status.FIRE)
                     {
-                        /* If there is a fire neighbor, unfreeze*/
+                        /* If there is a fire neighbor, unfreeze */
                         tempFire.unfreeze();
-                        setTileStatus(tempFire.getX(),
-                                      tempFire.getY(),
-                                      Status.FIRE);
-                        /* Remove it from the list*/
+                        setTileStatus(tempFire.getX(), tempFire.getY(),
+                                Status.FIRE);
+                        /* Remove it from the list */
                         iter.remove();
                         break;
                     }
@@ -128,7 +127,7 @@ public class Board extends Actor
                 {
                     if(t.getStatus() == Status.FIRE)
                     {
-                        /* If there is a fire neighbor, freeze it*/
+                        /* If there is a fire neighbor, freeze it */
                         tempFire = (FireBlock) getBlock(t.posX, t.posY);
                         tempFire.freeze();
                         t.setStatus(Status.FROZEN);
@@ -154,7 +153,7 @@ public class Board extends Actor
 
     public void switchTurn()
     {
-        switch(turn)
+        switch (turn)
         {
             case FIRE:
                 turn = Turn.ICE;
@@ -184,15 +183,15 @@ public class Board extends Actor
             {
                 /*
                  * Since opengl's (0,0) is bottom left and out Tile[][]'s (0,0)
-                 * is top left, we have to convert row (y) values as this.
-                 * Ex: for Tile[3][3]:
+                 * is top left, we have to convert row (y) values as this. Ex:
+                 * for Tile[3][3]:
                  * 
-                 * [0][0] [0][1] [0][2]    [2][0] [2][1] [2][2]
-                 * [1][0] [1][1] [1][2] is [1][0] [1][1] [1][2]
-                 * [2][0] [2][1] [2][2]    [0][0] [0][1] [0][2]
-                 *
+                 * [0][0] [0][1] [0][2] [2][0] [2][1] [2][2] [1][0] [1][1]
+                 * [1][2] is [1][0] [1][1] [1][2] [2][0] [2][1] [2][2] [0][0]
+                 * [0][1] [0][2]
+                 * 
                  * So [2][1] should be [3-2-1][1]
-                 **/
+                 */
                 tiles[row][col] = new Tile(col, boardRows - row - 1);
             }
         }
@@ -259,14 +258,14 @@ public class Board extends Actor
             }
         }
 
-        if(getTile(blk.getX(), blk.getY()).getStatus() == Status.ICE)
+        if(getTileStatus(blk.getX(), blk.getY()) == Status.ICE)
         {
-            float[] mv = Direction.move2tiles(blk.getX(),
-                                              blk.getY(),
-                                              blk.getDirection());
+            float[] mv = Direction.move2tiles(blk.getX(), blk.getY(),
+                    blk.getDirection());
 
-            if(mv[0] >= oriX && mv[0] <= boardCols && mv[1] >= oriY
-               && mv[1] <= boardRows)
+            if(getTileStatus(mv[0], mv[1]) == Status.EMPTY && mv[0] >= oriX
+                    && mv[0] <= boardCols && mv[1] >= oriY
+                    && mv[1] <= boardRows)
             {
                 tempRange = blockPools.rangePool.obtain();
                 tempRange.init(blk, mv[0], mv[1]);
@@ -294,8 +293,8 @@ public class Board extends Actor
     }
 
     /**
-     * Clears a MoveableBlock's range except the selected one.
-     * Sets the MoveableBlock's selectedRange
+     * Clears a MoveableBlock's range except the selected one. Sets the
+     * MoveableBlock's selectedRange
      * 
      * @param blk
      *            MoveableBlock that is going to move
@@ -303,7 +302,7 @@ public class Board extends Actor
     public void clearExceptSelected(MoveableBlock blk)
     {
         Iterator<Actor> iter = blk.rangeGroup.getChildren().iterator();
-        while(iter.hasNext())
+        while (iter.hasNext())
         {
             tempRange = (RangeBlock) iter.next();
             if(tempRange.isSelected())
@@ -360,7 +359,7 @@ public class Board extends Actor
         {
             for(int col = 0; col < boardCols; col++)
             {
-                switch(tiles[row][col].getStatus())
+                switch (tiles[row][col].getStatus())
                 {
                     case EMPTY:
                         System.out.print("- ");

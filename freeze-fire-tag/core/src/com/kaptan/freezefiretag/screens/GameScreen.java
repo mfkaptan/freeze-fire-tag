@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -22,7 +21,6 @@ public class GameScreen implements Screen
     private Board board;
     private Skin skin;
     private Stage hud;
-    private OrthographicCamera hudCamera;
     /* Buttons */
     private Button readyButton;
     Table table = new Table();
@@ -76,10 +74,9 @@ public class GameScreen implements Screen
 
         readyButton = new Button("Ready", skin, board);
         table.setPosition(Gdx.graphics.getWidth() * 0.9f,
-                          Gdx.graphics.getHeight() * 0.1f);
-        table.add(readyButton)
-             .width(Gdx.graphics.getWidth() * 0.1f)
-             .height(Gdx.graphics.getHeight() * 0.1f);
+                Gdx.graphics.getHeight() * 0.1f);
+        table.add(readyButton).width(Gdx.graphics.getWidth() * 0.1f)
+                .height(Gdx.graphics.getHeight() * 0.1f);
         hud.addActor(table);
     }
 
